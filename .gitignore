@@ -1,0 +1,7 @@
+# ignore extensionless binaries
+*
+!*.*
+
+# ignore haskell build artifacts
+**/*.hi
+**/*.o

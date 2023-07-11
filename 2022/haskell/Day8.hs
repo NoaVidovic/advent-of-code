@@ -48,14 +48,14 @@ viewingDistanceP p i j m =
 
 scenicScore :: Int -> Int -> Map -> Int
 scenicScore i j m =
-    foldr1 (*) $ map (\x -> viewingDistanceP x i j m) [ left, right, above, below ]
+    product $ map (\x -> viewingDistanceP x i j m) [ left, right, above, below ]
 
 
 solve :: String -> Int
 solve input =
     length $ filter id $ map ($ m) gridToV
         where
-            gridToV = concat $ map (flip map [0..jMax]) $ map isVisibleAny [0..iMax]
+            gridToV = concatMap (`map` [0..jMax]) $ map isVisibleAny [0..iMax]
             m = lines input
             iMax = length m - 1
             jMax = length (m !! 0) - 1
@@ -65,10 +65,10 @@ solve2 :: String -> Int
 solve2 input =
     maximum $ map ($ m) gridToS
         where
-            gridToS = concat $ map (flip map [0..jMax]) $ map scenicScore [0..iMax]
+            gridToS = concatMap (`map` [0..jMax]) $ map scenicScore [0..iMax]
             m = lines input
             iMax = length m - 1
-            jMax = length (m !! 0) - 1
+            jMax = length (head m) - 1
     
 
 main :: IO ()
